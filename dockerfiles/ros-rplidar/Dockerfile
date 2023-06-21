@@ -19,7 +19,7 @@ RUN . /opt/ros/noetic/setup.sh && \
 cd ros-workspace && \
 catkin_make
 
-RUN printf "roslaunch rosbridge_server rosbridge_websocket.launch &\nsleep 1\nroslaunch leg_monitoring rplidar_and_leg_monitoring.launch" > ~/run.sh && \
+RUN printf "roslaunch rosbridge_server rosbridge_websocket.launch &\nsleep 5\nroslaunch leg_monitoring rplidar_and_leg_monitoring.launch" > ~/run.sh && \
 chmod +x ~/run.sh
 
 CMD . /opt/ros/noetic/setup.sh && \
