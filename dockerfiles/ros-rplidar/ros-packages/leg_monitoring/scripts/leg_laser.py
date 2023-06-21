@@ -26,8 +26,8 @@ class LegL():
 	def initParameters(self):
 		self.LegMonitoringTopic = self.rospy.get_param("~LegMonitoring_topic","/scan_rplidar")
 		self.controlRate = self.rospy.get_param("~control_rate", 100)
-		self.angle_min_new = self.rospy.get_param("~angle_min_new",155)
-		self.angle_max_new = self.rospy.get_param("~angle_min_new",215)
+		self.angle_min_new = self.rospy.get_param("~angle_min_new", 75)
+		self.angle_max_new = self.rospy.get_param("~angle_min_new", 105)
 		return
 
 	def initPublishers(self):
