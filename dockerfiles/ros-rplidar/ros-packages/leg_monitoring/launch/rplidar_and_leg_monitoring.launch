@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<launch>
+
+<!--
+This launch file is used to launch RPLidar node and run leg-laser script
+-->
+
+<!--
+This launch was modified for rplidar a2m8
+-->
+
+<!--RPLidar node-->
+  <node name="rplidarNode" pkg="rplidar_ros"  type="rplidarNode" output="screen">
+    <param name="serial_port"         type="string" value="/dev/ttyUSB0"/>
+    <param name="serial_baudrate"     type="int"    value="115200"/>
+    <param name="frame_id"            type="string" value="laser"/>
+    <param name="inverted"            type="bool"   value="false"/>
+    <param name="angle_compensate"    type="bool"   value="true"/>
+    <remap from="/scan" to="/scan_rplidar"/>
+  </node>
+  
+  <node pkg="leg_monitoring" name="leg_monitoring" type="leg_laser.py" output="screen">
+	</node>
+
+</launch>
