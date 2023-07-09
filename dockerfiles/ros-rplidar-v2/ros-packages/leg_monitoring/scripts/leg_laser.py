@@ -68,7 +68,7 @@ class LegL():
 		self.amostrasP2 = 0
 		self.AngleAtualP2 = 0
 		self.distAtualP1 = 0
-		elf.distAtualP2 = 0
+		self.distAtualP2 = 0
 		self.DifDisAct = 0
 
 		## BRYAN
