@@ -62,6 +62,17 @@ class LegL():
 		self.mediaX = 0
 		self.mediaY = 0
 		self.k = 0
+		## BRYAN
+		self.amostrasP1 = 0
+		self.AngleAtualP1 = 0
+		self.amostrasP2 = 0
+		self.AngleAtualP2 = 0
+		self.distAtualP1 = 0
+		elf.distAtualP2 = 0
+		self.DifDisAct = 0
+
+		## BRYAN
+
 		"""----------------------------------  """
 
 		#vetor com os parametros da formacao.
@@ -109,7 +120,23 @@ class LegL():
 			#plt.xlim([0, 1])
 			#plt.ylim([-0.5, 0.5])
 
+
+		self.mediasArrayP = np.array(medias)
 		if medias != []:
+			# self.contador += 1
+			# print(self.contador)
+			## BRYAN
+			self.amostrasP1 = [self.mediasArrayP[0,0], self.mediasArrayP[0,1]]
+			self.AngleAtualP1 = np.arctan2(self.amostrasP1[0],self.amostrasP1[1])
+			self.amostrasP2 = [self.mediasArrayP[1,0], self.mediasArrayP[1,1]]
+			self.AngleAtualP2 = np.arctan2(self.amostrasP2[0],self.amostrasP2[1])
+			self.distAtualP1 = math.sqrt(math.pow(self.amostrasP1[0],2)+math.pow(self.amostrasP1[1],2))
+			self.distAtualP2 = math.sqrt(math.pow(self.amostrasP2[0],2)+math.pow(self.amostrasP2[1],2))
+			# self.DifDisAct = self.distAtualP1 -self.distAtualP2
+			self.DifDisAct = (self.distAtualP1*np.sin(self.AngleAtualP1)) - (self.distAtualP2*(np.sin(self.AngleAtualP2)))
+			## BRYAN
+
+
 			mediasArray = np.array(medias)
 			self.mediaX = np.mean(mediasArray[:,0])
 			self.mediaY = np.mean(mediasArray[:,1])
@@ -128,7 +155,7 @@ class LegL():
 			msg1.data = self.mediaX
 			self.pubDist.publish(msg1)
 			msg2 = Float32()
-			msg2.data = self.distAtual
+			msg2.data = self.DifDisAct
 			self.pubDistF.publish(msg2)
 		
 
