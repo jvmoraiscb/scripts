@@ -101,7 +101,7 @@ class LegL():
 			medias.append([mediaX,mediaY])
 			stilo = '.'
 			publicar_dist_pernas = str(mediaX) + ";" + mediaY + ";" + 'leg ' + str(j+1)
-			self.pub_dist_pernas.pub(publicar_dist_pernas)
+			self.pub_dist_pernas.publish(publicar_dist_pernas)
 
 		if medias != []:
 			mediasArray = np.array(medias)
