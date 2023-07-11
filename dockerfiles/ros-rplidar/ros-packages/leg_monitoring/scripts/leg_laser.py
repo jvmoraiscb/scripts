@@ -2,14 +2,12 @@
 
 import rospy
 from sensor_msgs.msg import LaserScan
-#from geometry_msgs.msg import Twist
 from std_msgs.msg import String
 from std_msgs.msg import Float32
 
 import math
 import numpy as np
 from sklearn.cluster import DBSCAN
-#import matplotlib.pyplot as plt
 import time
 
 class LegL():
@@ -33,6 +31,7 @@ class LegL():
 	def initPublishers(self):
 		self.pubDist = self.rospy.Publisher("/distance", Float32, queue_size=10)
 		self.pubDistF = self.rospy.Publisher("/distanceF", Float32, queue_size=10)
+		self.pub_dist_pernas = self.rospy.Publisher("/dist_pernas", String, queue_size=10)
 		return
 
 	def initSubscribers(self):
@@ -91,8 +90,6 @@ class LegL():
 		IDX = clustering.labels_
 		#plot dos dados
 		k = np.max(IDX)
-		#ramdom das cores
-		#cmap = plt.cm.get_cmap('hsv', 4)
 
 		#gera a variavel das medias
 		medias = []
@@ -103,18 +100,13 @@ class LegL():
 			mediaY = np.mean(Xj[:,1])
 			medias.append([mediaX,mediaY])
 			stilo = '.'
-			#color = cmap(j)
-			#plt.scatter(Xj[:,0],Xj[:,1], c=color, marker=stilo)
-			#plt.text(mediaX, mediaY, 'leg ' + str(j+1), fontdict=self.font)
-			#plt.xlim([0, 1])
-			#plt.ylim([-0.5, 0.5])
+			publicar_dist_pernas = str(mediaX) + ";" + mediaY + ";" + 'leg ' + str(j+1)
+			self.pub_dist_pernas.pub(publicar_dist_pernas)
 
 		if medias != []:
 			mediasArray = np.array(medias)
 			self.mediaX = np.mean(mediasArray[:,0])
 			self.mediaY = np.mean(mediasArray[:,1])
-			#plt.text(self.mediaX, self.mediaY, '*', fontdict=self.font)
-			#plt.text(self.mediaX+0.02, self.mediaY, 'Person', fontdict=self.font)
 			self.amostras[1]=[self.mediaX, self.mediaY]
 			self.distAnt = math.sqrt(math.pow(self.amostras[0][0],2)+math.pow(self.amostras[0][1],2))
 			self.distAtual = math.sqrt(math.pow(self.amostras[1][0],2)+math.pow(self.amostras[1][1],2))
@@ -165,10 +157,6 @@ class LegL():
 					msg1 = Float32()
 					msg1.data = 0
 					self.pubDist.publish(msg1)
-
-				#plt.grid()
-				#plt.pause(0.0001)
-				#plt.clf()
 
 				self.change = False
 
